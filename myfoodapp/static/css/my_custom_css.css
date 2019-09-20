@@ -1,0 +1,74 @@
+.over-image {
+    top: 7%;
+    right: -7%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    border-color: black;
+    border-width: 2px;
+    border-style: solid;
+}
+
+.image-management {
+    position: relative;
+    display: block;
+}
+
+body{
+    font-family: "Scope One", sans-serif;
+}
+
+header.masthead {
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(92, 77, 66, 0.8)), to(rgba(92, 77, 66, 0.8))), url('/static/img/portfolio/fullsize/2.jpg');
+    background: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%), url('/static/img/portfolio/fullsize/2.jpg');
+    color: rgb(232, 167, 93);
+    background-size: 100% 100%
+}
+
+header.masthead a{
+    color: rgb(134, 235, 230);
+}
+
+#mid2 {
+    color: rgb(196, 85, 37);
+}
+
+#mid2 a{
+    color: rgb(134, 235, 230);
+}
+
+#mid3 {
+    color: rgb(52, 90, 97);
+}
+
+#mid3 a{
+    color: rgb(134, 235, 230);
+}
+
+footer{
+    color: rgb(196, 85, 37);
+}
+
+#toptitle{
+    color: rgb(196, 85, 37);
+    font-family: "Scope One", sans-serif;
+}
+
+#mainNav .navbar-brand{
+    color: rgb(196, 85, 37);
+    font-family: "Scope One", sans-serif;
+}
+
+#mainNav .navbar{
+    color: rgb(196, 85, 37);
+    font-family: "Scope One", sans-serif;
+}
+
+#mainNav.navbar-scrolled .navbar-brand{
+    color: rgb(196, 85, 37);
+    font-family: "Scope One", sans-serif;
+}
+
+.row{
+    margin-right: 0px;
+    margin-left: 0px;
+}
