@@ -112,8 +112,8 @@ class FoodAndCatTest(TestCase):
         initiate()
         id_food1 = Food.objects.only(
             'id').get(name_food="pomme").id
-        self.assertEqual(get_better_food("chocolat", "dessert")[
-                         0]['Food_id_id'], id_food1)
+        self.assertEqual(get_better_food(
+            "chocolat", "dessert")[0]['Food_id_id'], id_food1)
 
     def test_searching_cat(self):
         initiate()
