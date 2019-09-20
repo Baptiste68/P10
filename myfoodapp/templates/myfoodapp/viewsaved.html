@@ -1,0 +1,52 @@
+{% extends "myfoodapp/search.html" %}
+{% block titlepage %}Mes aliments{% endblock %}
+{% load static %}
+
+{% block mid2 %}
+{% if user.is_authenticated %}
+    
+    <div class="row">
+        <div class="col-md-12" style="padding-left : 10%; padding-right : 10%;">
+            <div class="col-md-12" style="background-image : url({{ bkg_img }});">
+                <br />
+                <h2 class="text-center"><strong>{{ user.username }}</strong></h2>
+                <br />
+            </div>        
+        </div>
+    </div>
+
+{% else %}
+    <div class="row">
+        <div class="col-md-12" style="padding-left : 10%; padding-right : 10%;">
+            <div class="col-md-12" style="background-image : url({{ bkg_img }});">
+                <br />
+                <h2 class="text-center"><strong>Vous devez etre connecté</strong></h2>
+                <br />
+            </div>        
+        </div>
+    </div>
+
+{% endif %}
+{% endblock %}
+
+
+{% block spec_txt %}
+{% if user.is_authenticated %}
+    <p class="text-center">Vos ingrédients sauvegardés</p>
+{% else %}
+    <p class="text-center"></p>
+{% endif %}
+{% endblock %}
+
+{% block saved %}
+{% if user.is_authenticated %}
+    <a href='/myfoodapp/details/?sub={{ i.id }}&issub={{ i.food_is_sub_id }}'>Détail sauvegarde</a>
+{% else %}
+    <p class="text-center"></p>
+{% endif %}
+{% endblock %}
+
+
+{% block footer %}
+{% endblock %}
+

@@ -1,0 +1,26 @@
+{% extends "myfoodapp/base.html" %}
+{% block titlepage %}Mon Compte{% endblock %}
+
+{% block headsec %}
+{% endblock %}
+
+{% block mid2 %}
+
+{% if user.is_authenticated %}
+<div class="row">
+    <div class="col-md-12">
+        <p><strong><center>A Hoy</center></strong></p>
+        <p><strong><center>{{ user.username }} !</center></strong></p>
+        <p><strong><center>{{ user.email }} !</center></strong></p>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
+
+{% block sect3 %}
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+

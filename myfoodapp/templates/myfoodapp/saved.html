@@ -1,0 +1,37 @@
+{% extends "myfoodapp/base.html" %}
+{% block titlepage %}Aliments{% endblock %}
+{% load static %}
+
+{% block headsec %}
+{% endblock %}
+
+{% block mid2 %}
+
+<div class="row">
+    <div class="col-md-12">
+        <p class="text-center"><strong>{{ aliment }}</strong></p>
+
+        <p class="text-center">Résultat de votre sauvegarde:</p>
+        {% if logged %}
+            {% if inserted %}
+                <p class="text-center">Saved !</p>
+            {% else %}
+                <p class="text-center">Déja saved !</p>
+            {% endif %}
+        {% else %}
+            <p class="text-center">Vous devez être connecté</p>
+        {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block sect3 %}
+{% if user.is_authenticated %}
+{% endif %}
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+

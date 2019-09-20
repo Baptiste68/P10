@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  
+  {% block title %}<title>Food App</title>{% endblock %}
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <!-- Add additional CSS in static file -->
+  {% load static %}
+  <link rel="icon" href="{% static 'img/logo_pur_beurre-favicon.png' %}" />
+  <!-- Font Awesome Icons -->
+  <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+  <!-- Plugin CSS -->
+  <link href="{% static 'vendor/magnific-popup/magnific-popup.css' %}" rel="stylesheet">
+  <!-- Bootstrap core JavaScript -->
+  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <!-- Plugin JavaScript -->
+  <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+  <script src="{% static 'vendor/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+  <!-- Custom scripts for this template -->
+  <script src="{% static 'js/creative.min.js' %}"></script>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{% static 'css/creative.css' %}">
+  <link rel="stylesheet" href="{% static 'css/my_custom_css.css' %}">
+  {% block addstyle %}{% endblock %}
+
+</head>
+
+<body>
+    <div class="xs-12 sticky-top" id="toptitle">
+        <h1 style="text-align:center;">{% block titlepage %}Default{% endblock %}</h1>
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top py-3 navbar-scrolled" id="mainNav">
+        <a class="navbar-brand js-scroll-trigger flex-row mb-2" href='/myfoodapp/'><img src="{% static 'img/logo_pur_beurre.png' %}" alt="Home Page" width="15%" height="15%">Pur Beurre</a>
+        <button class="navbar-toggler navbar-toggler-right collapsed" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navbarResponsive" style="">
+            <ul class="navbar-nav ml-auto my-2 my-lg-0">
+                <!--
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href='/myfoodapp/populate/'>Populate</a>
+                </li>
+                -->
+                <li class="nav-item">
+                    <form action="/myfoodapp/search/">
+                        <input type="text" name="product" placeholder="Chercher"><br>
+                    </form>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="/myfoodapp/compte/"><img src="{% static 'img/useracc.png' %}" alt="Mon Compte" width="30px" height="30px"></a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="/myfoodapp/connexion/"><img src="{% static 'img/useracc.png' %}" alt="Connexion" width="30px" height="30px"></a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="/myfoodapp/viewsaved/"><img src="{% static 'img/carotte.png' %}" alt="Mes Aliments" width="30px" height="30px"></a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="/myfoodapp/deconnexion/"><img src="{% static 'img/deco.png' %}" alt="Se deconnecter" width="30px" height="30px"></a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="/myfoodapp/"><img src="{% static 'img/deco.png' %}" alt="Home Page" width="30px" height="30px"></a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    
+{% block headsec %}
+<header class="masthead">
+    {% block mid1 %}
+    {% endblock %}
+</header>
+{% endblock %}
+
+{% block sect2 %}
+<section class="page-section" id="mid2">
+    {% block mid2 %}
+    {% endblock %}
+</section>
+{% endblock %}
+
+{% block sect3 %}
+<section class="page-section bg-primary" id="mid3">
+  {% block mid3 %}
+  {% endblock %}
+</section>
+{% endblock %}
+
+<footer class="bg-light py-5">
+  {% block footer %}
+  <div class="row">
+    <div class="col-md-6"><a href="/myfoodapp/legals/"><center>Mentions legales</center></a></div>
+    <div class="col-md-6"><a href="#contact"><center>Contact</center></a></div>
+  </div>
+  {% endblock %}
+</footer>
+
+</body>
+</html>

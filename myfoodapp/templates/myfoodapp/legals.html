@@ -1,0 +1,41 @@
+{% extends "myfoodapp/base.html" %}
+{% block addstyle %}
+{% load static %}
+{% endblock %}
+
+{% block titlepage %}Mentions legales{% endblock %}
+
+{% block headsec %}
+{% endblock %}
+
+{% block mid2 %}
+<div class="row">
+    <div class="col-md-12">
+        <h1><center><u>Mentions legales</u></center></h1>
+        <br />
+        <center>
+        <h2>BDD : <a href="https://fr.openfoodfacts.org/categories" target="_blank">OpenFoodFacts</a></h2>
+        <h2>Charte graphique : <a href="https://company-82435.frontify.com/d/6Yy9WFJdtp8j/pur-beurre-style-guide#/elements-basiques/grille" target="_blank">PurBeurre</a></h2>
+    </div>
+</div>
+{% endblock %}
+
+{% block mid3 %}
+<div class="row">
+<div class="col-md-12" id="contact">
+        <h2 class="text-center">Contactez-nous !</h2>
+        <p class="text-center">N'hésitez pas à nous contacter</p>
+        <div class="row">
+            <div class="col-md-6 ml-auto text-center mb-5 mb-lg-0">
+                <i class="fas fa-phone fa-3x mb-3 text-muted"></i>
+                <div>+33 (0)3 82 82 82 82</div>
+            </div>
+            <div class="col-md-6 mr-auto text-center">
+                <i class="fas fa-envelope fa-3x mb-3 text-muted"></i>
+                <!-- Make sure to change the email address in anchor text AND the link below! -->
+                <a class="d-block" href="mailto:foodapp@foodapp.com">foodapp@foodapp.com</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

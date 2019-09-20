@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  
+  {% block title %}<title>Django DIY Blog</title>{% endblock %}
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+  <!-- Add additional CSS in static file -->
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/creative.css' %}">
+  <link rel="stylesheet" href="{% static 'css/image_over.css' %}">
+  {% block addstyle %}{% endblock %}
+</head>
+<body>
+
+<h1 style="text-align:center;">{% block titlepage %}Default{% endblock %}</h1>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-1"><a href='/myfoodapp/'><img src="{% static 'img/robot.PNG' %}" alt="Flowers in Chania"></a></div>
+    <div class="col-md-2">Pur Beurre</div>
+    <div class="col-md-1"></div>
+    <div class="col-md-1"></div>
+    <div class="col-md-1"><a href='/myfoodapp/populate/'>Populate</a></div>
+    <div class="col-md-1"></div>
+    <div class="col-md-1"></div>
+    <div class="col-md-2">
+        <form action="/myfoodapp/search/">
+            <input type="text" name="product" placeholder="Chercher"><br>
+        </form>
+    </div>
+    {% if user.is_authenticated %}
+    <div class="col-md-1"><a href="/myfoodapp/compte/">Mon Compte</a></div>
+    {% else %}
+    <div class="col-md-1"><a href="/myfoodapp/connexion/">Mon Compte</a></div>
+    {% endif %}
+    {% if user.is_authenticated %}
+    <div class="col-md-1"><a href="/myfoodapp/deconnexion/">se deconnecter</a></div>
+    {% else %}
+    <div class="col-md-1"><a href="/myfoodapp/connexion/">se connecter</a></div>
+    {% endif %}
+  </div>
+
+  {% block mid2 %}
+  <div class="row">
+    <div class="col-md-8">.col-md-8</div>
+    <div class="col-md-4">.col-md-4</div>
+  </div>
+  {% endblock %}
+
+  {% block mid3 %}
+  <div class="row">
+    <div class="col-md-4">.col-md-4</div>
+    <div class="col-md-4">.col-md-4</div>
+    <div class="col-md-4">.col-md-4</div>
+  </div>
+  {% endblock %}
+  {% block footer %}
+  <div class="row">
+    <div class="col-md-6"><center>Mentions legales</center></div>
+    <div class="col-md-6"><center>Contact</center></div>
+  </div>
+  {% endblock %}
+</div>
+
+</body>
+</html>

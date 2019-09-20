@@ -1,0 +1,56 @@
+{% extends "myfoodapp/base.html" %}
+{% block titlepage %}Se connecter{% endblock %}
+
+{% block headsec %}
+{% endblock %}
+
+{% block sect2 %}
+{% block mid2 %}
+{% if error %}
+<div class="row">
+  <div class="col-md-12"><p><strong><center>Utilisateur inconnu ou mauvais de mot de passe.</center></strong></p></div>
+</div>
+{% endif %}
+
+{% if user.is_authenticated %}
+<div class="row">
+    <div class="col-md-12"><p><strong><center>Vous êtes connecté, {{ user.username }} !</center></strong></p></div>
+</div>
+{% else %}
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <form method="post" action="."><center>
+            <div class="form-horizontal">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Se connecter" class="btn btn-primary" /></center>
+            </div>
+        </form>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
+{% endblock %}
+
+{% block sect3 %}
+{% block mid3 %}
+{% if user.is_authenticated %}
+<div class="row">
+</div>
+{% else %}
+<div class="row">
+    <div class="col-md-12">
+        <center>
+        <a href="/myfoodapp/creation/">Créez un compte</a>
+        </center>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+

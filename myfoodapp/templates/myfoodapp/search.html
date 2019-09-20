@@ -1,0 +1,43 @@
+{% extends "myfoodapp/base.html" %}
+{% block titlepage %}Aliments{% endblock %}
+{% load static %}
+
+{% block headsec %}
+{% endblock %}
+
+{% block mid2 %}
+
+<div class="row">
+    <div class="col-md-12" style="padding-left : 10%; padding-right : 10%; background-color: rgb(134, 235, 230);">
+        <div class="col-md-12" style="background-image : url({{ bkg_img }}); margin-left: auto; margin-right: auto; width: 180px; height: 250px;">
+            <br />
+            <h2 class="text-center" style="text-shadow: black 1px 1px;"><strong>{{ aliment }}</strong></h2>
+            <br />
+        </div>        
+    </div>
+</div>
+
+{% endblock %}
+
+{% block mid3 %}
+{% block spec_txt %}<p class="text-center">Vous pouver remplacer cet aliment par:</p>{% endblock %}
+<div class = "row text-center" style="padding-left : 10%; padding-right : 10%;">
+{% for i in my_result %}
+    <div class="col-sm-4 text-center" style="padding : 10px; background-size: cover;">
+        <div class='over-management'>
+            <a href='/myfoodapp/product/?product={{ i.id }}'><img src="{{ i.img_food }}" class="img-thumbnail" width="80%" style="height: 250px; margin-left: 10%; margin-right: 10%;"></a>
+            {% get_static_prefix as STATIC_PREFIX %}
+            <img src="{{ STATIC_PREFIX }}img/{{ i.nutri_score_food }}.png" width="50px" height="50px" class="over-image img-circle">
+            {% block saved %}
+            <a href='/myfoodapp/saved/?sub={{ i.id }}&tosub={{ id_to_sub }}'><img src="{{ STATIC_PREFIX }}img/save.png" width="20px" height="20px"></a>
+            {% endblock %}
+            {{ i.name_food }}
+        </div>
+    </div>
+{% endfor %}
+</div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+

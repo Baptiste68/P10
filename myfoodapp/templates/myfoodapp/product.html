@@ -1,0 +1,55 @@
+{% extends "myfoodapp/base.html" %}
+{% block titlepage %}Aliments{% endblock %}
+{% load static %}
+
+{% block headsec %}
+{% endblock %}
+
+{% block mid2 %}
+
+<div class="row">
+    <div class="col-md-12" style="padding-left : 10%; padding-right : 10%; background-color: rgb(134, 235, 230);">
+        <div class="col-md-12" style="background-image : url({{ my_product.img_food }}); margin-left: auto; margin-right: auto; width: 180px; height: 250px;">
+            <br />
+            <br />
+            <h2 class="text-center" style="text-shadow: black 1px 1px;"><strong>{{ my_product.name_food }}</strong></h2>
+        </div>
+    </div>
+    <div class="col-sm-6 text-center">
+        <br />
+        <p class="text-center">Nutri score</p>
+        {% for i in score_range %}
+        {% if i == my_product.nutri_score_food %}
+            <strong>{{ i|capfirst }}</strong>
+        {% else %}
+            {{ i }}
+        {% endif %}
+        {% endfor %}
+    </div>
+    <div class="col-sm-6 text-center">
+    <br />
+    {% if my_product.quantity_food == "None" or my_product.quantity_food == "" %}
+        <p class="text-center">Pas d'indication de quantité</p>
+    {% else %}
+        <p class="text-center">Repère nutritionnels <br />
+        pour {{ my_product.quantity_food }}</p>
+    {% endif %}
+    </div>
+
+    <div class="col-md-12" style="padding-left : 10%; padding-right : 10%;">
+        <div class="col-md-12 text-center">
+            <a href="{{ my_product.link_food }}"  class="btn btn-outline-primary btn-block" target="_blank">Voir la fiche d'OpenFoodFacts</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block sect3 %}
+{% if user.is_authenticated %}
+{% endif %}
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+
