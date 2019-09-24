@@ -30,7 +30,7 @@ if os.environ.get('ENV') == 'PRODUCTION':
 else:
     DEBUG = True
 
-ALLOWED_HOSTS = ['baptiste-foodapp.herokuapp.com']
+ALLOWED_HOSTS = ['142.93.233.149']
 
 LOGIN_URL = '/connexion/'
 
@@ -55,7 +55,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    #'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'foodbapp.urls'
@@ -94,10 +94,10 @@ DATABASES = {
         #    'NAME': 'test_fooddb',
         #    'options': '-c search_path=django,testfooddb'
         #},
-        'USER': 'ugsscftpngcuym',
-        'NAME': 'd1ub9pofgqi8nd',
-        'PASSWORD': 'a924328dda1246f591065e3336fbc6dcb8c780b31a3df69fe54bbb4e1315872d',
-        'HOST': 'ec2-54-75-224-168.eu-west-1.compute.amazonaws.com',
+        'USER': 'baptiste',
+        'NAME': 'fooddb',
+        'PASSWORD': 'baptiste',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
@@ -153,7 +153,7 @@ if os.environ.get('ENV') == 'PRODUCTION':
         os.path.join(PROJECT_ROOT, 'static'),
     )
 
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+   # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
     db_from_env = dj_database_url.config(conn_max_age=500)
     DATABASES['default'].update(db_from_env)

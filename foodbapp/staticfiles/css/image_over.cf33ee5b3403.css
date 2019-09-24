@@ -1,0 +1,11 @@
+.over-image {
+    top: 7%;
+    right: -7%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+}
+
+.image-management {
+    position: relative;
+    display: block;
+}
