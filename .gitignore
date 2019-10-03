@@ -1,0 +1,3 @@
+foodapp/settings/production.py
+__pycache__
+foodapp/staticfiles/
