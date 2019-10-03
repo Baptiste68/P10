@@ -1,0 +1,19 @@
+language: python
+python:
+  - "3.6"
+
+before_script:
+  - pip install -r requirements.txt
+
+env: DJANGO_SETTINGS_MODULE="foodbapp.settings"
+
+# safelist
+branches:
+  only:
+    - staging
+
+services:
+  - postgresql
+
+script:
+  - ./manage.py test
