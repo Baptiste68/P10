@@ -1,5 +1,6 @@
 import requests
 import json
+import logging
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
@@ -16,6 +17,7 @@ from .forms import ConnexionForm, NewUserForm
 
 # Create your views here.
 
+logger = logging.getLogger(__name__)
 
 class IndexView(View):
     """
@@ -270,6 +272,10 @@ def get_better_food(product, category):
             candidate_score = ord(candidate_score)
             if candidate_score <= nutri_score:
                 results.append(id)
+
+    logger.info('New search', exc_info=True, extra={
+        'search_result': results,
+    })
 
     return results
 
