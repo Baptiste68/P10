@@ -5,8 +5,8 @@ from django.db import connections
 def prepare_database(self):
     self.connect()
     self.connection.cursor().execute("""
-    CREATE SCHEMA testfooddb AUTHORIZATION ugsscftpngcuym;
-    GRANT ALL ON SCHEMA testfooddb TO d1ub9pofgqi8nd;
+    CREATE SCHEMA testfooddb AUTHORIZATION postgres;
+    GRANT ALL ON SCHEMA testfooddb TO postgres;
     """)
 
 
