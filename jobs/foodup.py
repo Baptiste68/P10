@@ -1,7 +1,10 @@
+import requests
+import json
 from django_cron import CronJobBase, Schedule
+from myfoodapp.models import Food
 
 class MyCronJob(CronJobBase):
-    RUN_EVERY_MINS = 120 # every 2 hours
+    RUN_EVERY_MINS = 60 * 24 * 7 # every 2 hours
 
     schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
     code = 'foodbapp.my_cron_job'    # a unique code
@@ -15,21 +18,21 @@ class MyCronJob(CronJobBase):
 
     
     def changeurl(url):
-        lespos = charposition(url, '/')
-        print(lespos)
+        lespos = MyCronJob.charposition(url, '/')
         old_link = url
         old_link = old_link[0:lespos[-1]]
         new_link = old_link[:lespos[2]]+"/api/v0"+old_link[lespos[2]:]
-        print(new_link)
         new_link = new_link+".json"
-        print(new_link)
         return new_link
 
     def do(self):
         link = Food.objects.values_list('link_food', flat=True)
+        total = len(link)
+        i = 0
         for pos in link:
-            print(pos)
-            url = changeurl(pos)
+            i = i + 1
+            # print(pos)
+            url = MyCronJob.changeurl(pos)
 
             temp = Food.objects.filter(link_food=pos).values(
                 'dangers_food', 'nutri_score_food', 'quantity_food','img_food',
@@ -71,8 +74,11 @@ class MyCronJob(CronJobBase):
 
                 img = str(jData.get('product').get('image_url'))
                 if img != img_food:
-                    Food.objects.filter(link_food=pos).update(img_food=qunatity)
+                    Food.objects.filter(link_food=pos).update(img_food=img)
                     update = True
 
                 if update:
                     print(pos+"  has been updated")
+
+            progression = i*100/total
+            print("prog is : "+str(progression)+"%")
