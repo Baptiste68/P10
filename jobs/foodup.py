@@ -28,6 +28,7 @@ class MyCronJob(CronJobBase):
     def do(self):
         link = Food.objects.values_list('link_food', flat=True)
         total = len(link)
+        changed = []
         i = 0
         for pos in link:
             i = i + 1
@@ -79,6 +80,9 @@ class MyCronJob(CronJobBase):
 
                 if update:
                     print(pos+"  has been updated")
+                    changed.append(pos)
 
             progression = i*100/total
             print("prog is : "+str(progression)+"%")
+
+        return changed
