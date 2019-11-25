@@ -8,10 +8,18 @@
 
 {% if user.is_authenticated %}
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-8">
         <p><strong><center>A Hoy</center></strong></p>
         <p><strong><center>{{ user.username }} !</center></strong></p>
         <p><strong><center>{{ user.email }} !</center></strong></p>
+    </div>
+    <div class="col-md-3">
+        <div class="col-md-12">
+            <p><center>Modifier Email</center></p>
+        </div>
+        <div class="col-md-12">
+            <p><center>Modifier Mdp</center></p>
+        </div>
     </div>
 </div>
 {% endif %}
