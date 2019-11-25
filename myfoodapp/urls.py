@@ -1,6 +1,8 @@
 from django.urls import path
+from django.conf.urls import url
 
 from . import views
+from . import forms
 
 app_name = 'myfoodapp'
 urlpatterns = [
@@ -10,6 +12,7 @@ urlpatterns = [
     path('creation/', views.creation, name='creation'),
     path('compte/', views.CompteView.as_view(), name='compte'),
     path('populate/', views.PopulateView.as_view(), name='populate'),
+    path('testup/', views.TestupView.as_view(), name='testup'),
     path('search/', views.SearchView.as_view(), name='search'),
     path('product/', views.ProductView.as_view(), name='product'),
     path('saved/', views.SavedView.as_view(), name='saved'),
@@ -19,4 +22,5 @@ urlpatterns = [
     path('my_view', views.ProductView.as_view(), name='my_view'),
     path('legals/', views.legals, name='legals'),
     path('failsearch/', views.failsearch, name='failsearch'),
+    url(r'^autocomplete/$',views.AutoCompleteView.as_view(), name='autocomplete'),
 ]
