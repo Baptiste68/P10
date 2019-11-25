@@ -89,6 +89,32 @@ def deconnexion(request):
     logout(request)
     return redirect(reverse('myfoodapp:connexion'))
 
+#code in view which returns json data 
+class AutoCompleteView(View):
+
+    def get(self,request,*args,**kwargs):
+        data = request.GET
+        name = data.get("term")
+        print(name)
+
+        if name:
+            users = Food.objects.filter(name_food__icontains=name)
+        else:
+            users = Food.objects.all()
+
+        results = []
+        for user in users:
+            user_json = {}
+            user_json['id'] = user.id
+            user_json['label'] = user.name_food
+            user_json['value'] = user.name_food
+            results.append(user_json)
+
+        print(results)
+        data = json.dumps(results)
+        print(data)
+        mimetype = 'application/json'
+        return HttpResponse(data, mimetype)
 
 def legals(request):
     return render(request, 'myfoodapp/legals.html')
@@ -114,6 +140,84 @@ def display(request):
     template_name = 'myfoodapp/populate.html'
     return render(request, template_name)
 
+def charposition(string, char):
+    pos = [] #list to store positions for each 'char' in 'string'
+    for n in range(len(string)):
+        if string[n] == char:
+            pos.append(n)
+    return pos
+
+    
+def changeurl(url):
+    lespos = charposition(url, '/')
+    print(lespos)
+    old_link = url
+    old_link = old_link[0:lespos[-1]]
+    new_link = old_link[:lespos[2]]+"/api/v0"+old_link[lespos[2]:]
+    print(new_link)
+    new_link = new_link+".json"
+    print(new_link)
+    return new_link
+
+class TestupView(generic.ListView):
+    model = User
+    template_name = 'myfoodapp/populate.html'
+
+    def get(self, request):
+        display(request)
+        link = Food.objects.values_list('link_food', flat=True)
+        print(link)
+        print(link[1])
+        url = changeurl(link[1])
+
+        temp = Food.objects.filter(link_food=link[1]).values(
+            'dangers_food', 'nutri_score_food', 'quantity_food','img_food',
+            'store_food')
+        
+        dangers_food = temp[0]['dangers_food']
+        nutri_score_food = temp[0]['nutri_score_food']
+        store_food = temp[0]['store_food']
+        quantity_food = temp[0]['quantity_food']
+        img_food = temp[0]['img_food']
+
+        response = requests.get(url)
+        update = False
+        if(response.ok):    # if answer is ok we take info
+            jData = json.loads(response.content)
+            quantity = str(jData.get('product').get('quantity'))
+            quantity = quantity.replace('\\', '')
+            if quantity != quantity_food:
+                Food.objects.filter(link_food=link[1]).update(quantity_food=quantity)
+                update = True
+
+            dangers = str(jData.get('product').get('traces'))
+            dangers = dangers.replace('\\', '')
+            if dangers != dangers_food:
+                Food.objects.filter(link_food=link[1]).update(dangers_food=dangers)
+                update = True
+
+            stores = str(jData.get('product').get('stores'))
+            stores = stores.replace('\\', '')
+            if stores != store_food:
+                Food.objects.filter(link_food=link[1]).update(store_food=stores)
+                update = True
+
+            nutri_score = str(jData.get('product').get('nutrition_grades_tags')[0])
+            nutri_score = nutri_score.replace('\\', '')
+            if nutri_score != nutri_score_food:
+                Food.objects.filter(link_food=link[1]).update(nutri_score_food=nutri_score)
+                update = True
+
+            img = str(jData.get('product').get('image_url'))
+            if img != img_food:
+                Food.objects.filter(link_food=link[1]).update(img_food=qunatity)
+                update = True
+
+            if update:
+                print(link[1]+"  has been updated")
+            
+
+        return render(request, self.template_name)
 
 class PopulateView(generic.ListView):
     model = User

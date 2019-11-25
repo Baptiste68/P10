@@ -1,4 +1,5 @@
 import datetime
+import json
 
 from django.test import TestCase, RequestFactory, Client
 from django.utils import timezone
@@ -9,7 +10,7 @@ from django.contrib.auth import authenticate, login
 
 from .models import Food, Categories, foodcate, saved
 from .views import get_better_food, searching_cat, ProductView, connexion
-from .views import creation, SavedView
+from .views import creation, SavedView, AutoCompleteView
 from . import views
 from . import forms
 
@@ -138,3 +139,25 @@ class FoodAndCatTest(TestCase):
         request = factory.get('/product/', {'product': id_food1})
         result = ProductView.get(self, request)
         self.assertEqual(result.status_code, 200)
+
+    def test_autocomplet(self):
+        create_food("Haricots Plats", 12, "", "", 'A', "", "")
+        create_food("Haricots noirs", 1, "", "", 'A', "", "")
+        create_food("Oeufs Plats", 2, "", "", 'A', "", "")
+        self.template_name = 'myfoodapp/index.html'
+        factory = RequestFactory()
+        request = factory.get('/index/', {'term': 'hari'})
+        response = AutoCompleteView.get(self,request)
+
+        result = []
+
+        for entry in response:
+            my_json = entry.decode('utf8').replace("'", '"')
+            value = json.loads(my_json)
+            for data in value:
+                result.append(data['value'])
+        
+        self.assertEqual(result,['Haricots Plats', 'Haricots noirs'])
+            
+
+
