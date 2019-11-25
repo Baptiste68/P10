@@ -72,3 +72,40 @@ footer{
     margin-right: 0px;
     margin-left: 0px;
 }
+
+
+.ui-menu-item{
+    z-index: 10;
+    background-color: transparent;
+  }
+  
+
+.ui-autocomplete{
+    background-color: whitesmoke;
+    display: block;
+    flex-basis: 100%;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    -webkit-box-align: center;
+    z-index: 2000 !important;
+}
+
+.ui-menu-item .ui-corner-all{
+    background-color: transparent;
+    display: block;
+    flex-basis: 100%;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    -webkit-box-align: center;
+    z-index: 0;
+}
+
+.ui-autocomplete .ui-menu .ui-widget .ui-widget-content .ui-corner-all{
+    background-color: grey;
+    display: block;
+    flex-basis: 100%;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    -webkit-box-align: center;
+    z-index: 0;
+}
