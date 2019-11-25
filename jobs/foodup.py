@@ -28,6 +28,7 @@ class MyCronJob(CronJobBase):
     def do(self):
         link = Food.objects.values_list('link_food', flat=True)
         total = len(link)
+        acceptable_note = ['a', 'b', 'c', 'd', 'e']
         changed = []
         i = 0
         for pos in link:
@@ -41,6 +42,9 @@ class MyCronJob(CronJobBase):
             
             dangers_food = temp[0]['dangers_food']
             nutri_score_food = temp[0]['nutri_score_food']
+            if nutri_score_food not in acceptable_note:
+                Food.objects.filter(link_food=pos).update(nutri_score_food='e')
+                nutri_score_food = 'e'
             store_food = temp[0]['store_food']
             quantity_food = temp[0]['quantity_food']
             img_food = temp[0]['img_food']
@@ -69,7 +73,7 @@ class MyCronJob(CronJobBase):
 
                 nutri_score = str(jData.get('product').get('nutrition_grades_tags')[0])
                 nutri_score = nutri_score.replace('\\', '')
-                if nutri_score != nutri_score_food:
+                if nutri_score != nutri_score_food and nutri_score in acceptable_note:
                     Food.objects.filter(link_food=pos).update(nutri_score_food=nutri_score)
                     update = True
 
