@@ -10,7 +10,7 @@ from django.contrib.auth import authenticate, login
 
 from .models import Food, Categories, foodcate, saved
 from .views import get_better_food, searching_cat, ProductView, connexion
-from .views import creation, SavedView, AutoCompleteView
+from .views import creation, SavedView, AutoCompleteView, pwdchange
 from . import views
 from . import forms
 
@@ -101,6 +101,19 @@ class UserTest(TestCase):
             'user': user
         })
         self.assertEqual(response.status_code, 200)
+
+    def test_pwd_change(self):
+        log = self.client.login(username='basim', password='simba')
+        self.client.force_login(self.user_1)
+        user = User.objects.get(email="bas@bas.bas")
+        req = self.client.post(reverse('myfoodapp:pwdchange'), {
+            "old_password": "simba",
+            "new_password": "sim",
+            "new_password_b": "sim",
+            'user': user
+        })
+        user = authenticate(username="basim", password="sim")
+        self.assertTrue(user)
 
     def cleanUp(self):
         self.user_1.delete()
