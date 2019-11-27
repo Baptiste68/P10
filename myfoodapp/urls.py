@@ -23,4 +23,5 @@ urlpatterns = [
     path('legals/', views.legals, name='legals'),
     path('failsearch/', views.failsearch, name='failsearch'),
     url(r'^autocomplete/$',views.AutoCompleteView.as_view(), name='autocomplete'),
+    path('pwdchange/', views.pwdchange, name='pwdchange'),
 ]

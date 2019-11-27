@@ -13,7 +13,7 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 
 from .models import Categories, Food, foodcate, saved
-from .forms import ConnexionForm, NewUserForm
+from .forms import ConnexionForm, NewUserForm, ChangePwd
 
 # Create your views here.
 
@@ -88,6 +88,35 @@ def connexion(request):
 def deconnexion(request):
     logout(request)
     return redirect(reverse('myfoodapp:connexion'))
+
+
+def pwdchange(request):
+    """
+        Function to create new user
+    """
+    errorusr = False
+    errorpwd = False
+
+    created = False
+    if request.method == "POST":
+        form = ChangePwd(request.POST)
+        if form.is_valid():
+            old_password = form.cleaned_data["old_password"]
+            new_password = form.cleaned_data["new_password"]
+            new_password_b = form.cleaned_data["new_password_b"]
+            user = request.user
+            if user:  # Si l'objet renvoyé n'est pas None
+                if new_password == new_password_b:
+                    user.set_password(new_password)
+                    user.save()
+                else:
+                    errorpwd = True
+            else:  # sinon une erreur sera affichée
+                errorusr = True
+    else:
+        form = ChangePwd()
+
+    return render(request, 'myfoodapp/pwdchange.html', locals())
 
 #code in view which returns json data 
 class AutoCompleteView(View):
