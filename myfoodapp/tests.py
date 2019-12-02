@@ -11,6 +11,7 @@ from django.contrib.auth import authenticate, login
 from .models import Food, Categories, foodcate, saved
 from .views import get_better_food, searching_cat, ProductView, connexion
 from .views import creation, SavedView, AutoCompleteView, pwdchange
+from .views import SearchView
 from . import views
 from . import forms
 
@@ -124,10 +125,18 @@ class FoodAndCatTest(TestCase):
 
     def test_better_food(self):
         initiate()
+        create_food("banane", "1", "", "mystore", "None", "", "")
         id_food1 = Food.objects.only(
             'id').get(name_food="pomme").id
         self.assertEqual(get_better_food(
             "chocolat", "dessert")[0]['Food_id_id'], id_food1)
+
+    def test_search_no_note(self):
+        self.template_name = 'myfoodapp/search.html'
+        factory = RequestFactory()
+        initiate()
+        create_food("banane", "1", "", "mystore", "None", "", "")
+        self.assertEqual(get_better_food("banane", "dessert"), "Err")
 
     def test_searching_cat(self):
         initiate()
@@ -160,7 +169,7 @@ class FoodAndCatTest(TestCase):
         self.template_name = 'myfoodapp/index.html'
         factory = RequestFactory()
         request = factory.get('/index/', {'term': 'hari'})
-        response = AutoCompleteView.get(self,request)
+        response = AutoCompleteView.get(self, request)
 
         result = []
 
@@ -169,8 +178,4 @@ class FoodAndCatTest(TestCase):
             value = json.loads(my_json)
             for data in value:
                 result.append(data['value'])
-        
-        self.assertEqual(result,['Haricots Plats', 'Haricots noirs'])
-            
-
-
+        self.assertEqual(result, ['Haricots Plats', 'Haricots noirs'])

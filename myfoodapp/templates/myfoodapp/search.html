@@ -20,6 +20,13 @@
 {% endblock %}
 
 {% block mid3 %}
+{% if err %}
+<div class="row">
+  <div class="col-md-12"><p><strong><center>Erreur cet aliment n'a pas de note valabe !!</center></strong></p></div>
+</div>
+
+{% else %}
+
 {% block spec_txt %}<p class="text-center">Vous pouver remplacer cet aliment par:</p>{% endblock %}
 <div class = "row text-center" style="padding-left : 10%; padding-right : 10%;">
 {% for i in my_result %}
@@ -36,6 +43,7 @@
     </div>
 {% endfor %}
 </div>
+{% endif %}
 {% endblock %}
 
 {% block footer %}
