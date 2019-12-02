@@ -385,30 +385,40 @@ def get_better_food(product, category):
         category that are a higher or equal
         nutri-score than the product given
     """
+    acceptable_note = ['a', 'b', 'c', 'd', 'e', 'A', 'B', 'C']
+    acceptable_note.append('D')
+    acceptable_note.append('E')
+
     nutri_score = Food.objects.only('nutri_score_food').get(
         name_food=product).nutri_score_food
-    nutri_score = ord(nutri_score)  # score of the product
 
-    id_category = Categories.objects.only(
-        'id').get(name_categories=category).id
-    candidate_ids = foodcate.objects.filter(
-        Q(Categories_id_id=id_category)).values('Food_id_id')
+    if nutri_score not in acceptable_note:
+        results = "Err"
 
-    results = []
+    else:
+        nutri_score = ord(nutri_score)  # score of the product
 
-    id_ref = Food.objects.only('id').get(name_food=product).id
-    for id in candidate_ids:
-        # check that it is not the aliment to sub
-        if id['Food_id_id'] is not id_ref:
-            candidate_score = Food.objects.only('nutri_score_food').get(
-                id=id['Food_id_id']).nutri_score_food
-            candidate_score = ord(candidate_score)
-            if candidate_score <= nutri_score:
-                results.append(id)
+        id_category = Categories.objects.only(
+            'id').get(name_categories=category).id
+        candidate_ids = foodcate.objects.filter(
+            Q(Categories_id_id=id_category)).values('Food_id_id')
 
-    logger.info('New search', exc_info=True, extra={
-        'search_result': results,
-    })
+        results = []
+
+        id_ref = Food.objects.only('id').get(name_food=product).id
+        for id in candidate_ids:
+            # check that it is not the aliment to sub
+            if id['Food_id_id'] is not id_ref:
+                candidate_score = Food.objects.only('nutri_score_food').get(
+                    id=id['Food_id_id']).nutri_score_food
+                if candidate_score in acceptable_note:
+                    candidate_score = ord(candidate_score)
+                    if candidate_score <= nutri_score:
+                        results.append(id)
+
+        logger.info('New search', exc_info=True, extra={
+            'search_result': results,
+        })
 
     return results
 
@@ -431,15 +441,23 @@ class SearchView(generic.ListView):
             list_id = get_better_food(aliment, category)
             temp = []
             my_result = []
-            for id in list_id:
-                temp = Food.objects.filter(id=id['Food_id_id']).values(
-                    'name_food', 'nutri_score_food', 'id', 'img_food')
-                my_result.append(
-                    {'name_food': temp[0]['name_food'],
-                     'nutri_score_food': temp[0]['nutri_score_food'],
-                     'id': temp[0]['id'], 'img_food': temp[0]['img_food']})
+            if list_id == "Err":
+                return render(request, self.template_name, {'err': 'no note',
+                                                            'aliment': aliment,
+                                                            'category': category,
+                                                            'my_result': my_result,
+                                                            'id_to_sub': id_to_sub,
+                                                            'bkg_img': bkg_img})
+            else:
+                for id in list_id:
+                    temp = Food.objects.filter(id=id['Food_id_id']).values(
+                        'name_food', 'nutri_score_food', 'id', 'img_food')
+                    my_result.append(
+                        {'name_food': temp[0]['name_food'],
+                        'nutri_score_food': temp[0]['nutri_score_food'],
+                        'id': temp[0]['id'], 'img_food': temp[0]['img_food']})
 
-            return render(request, self.template_name, {'aliment': aliment,
+                return render(request, self.template_name, {'aliment': aliment,
                                                         'category': category,
                                                         'my_result': my_result,
                                                         'id_to_sub': id_to_sub,
